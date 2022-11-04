@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Deficiencia;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 
 class DeficienciasController extends Controller
@@ -13,7 +15,8 @@ class DeficienciasController extends Controller
      */
     public function index()
     {
-        //
+        $deficiencias = Deficiencia::paginate(5);
+        return view('deficiencia.index', array('deficiencias'=>$deficiencias, 'busca'=>null));
     }
 
     /**
@@ -21,9 +24,14 @@ class DeficienciasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function buscar(Request $request) {
+        $deficiencias = Deficiencia::where('tipo', 'LIKE'. '%'.$request->input('busca').'%');
+        return view('deficiencia.index', array('deficiencias'=>$deficiencias, 'busca' => $request->input('busca')));
+     }
+
     public function create()
     {
-        //
+        return view('deficiencia.create');
     }
 
     /**
@@ -34,7 +42,11 @@ class DeficienciasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $deficiencia = new Deficiencia();
+        $deficiencia->tipo = $request->input('tipo');
+        if($deficiencia->save()) {
+            return redirect('deficiencias');
+        }
     }
 
     /**
@@ -79,6 +91,9 @@ class DeficienciasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deficiencia = Deficiencia::find($id);
+        $deficiencia->delete();
+        Session::flash('mensagem', 'Deficiencia excluida com sucesso');
+        return redirect(url('deficiencias/'));
     }
 }

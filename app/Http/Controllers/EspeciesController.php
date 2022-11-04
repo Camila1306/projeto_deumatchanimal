@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Especie;
 use Illuminate\Http\Request;
 
 class EspeciesController extends Controller
@@ -13,7 +14,8 @@ class EspeciesController extends Controller
      */
     public function index()
     {
-        //
+        $especies = Especie::paginate(5);
+        return view('especie.index', array('especies'=>$especies, 'busca'=>null));
     }
 
     /**
@@ -21,9 +23,15 @@ class EspeciesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function buscar(Request $request){
+        $especies = Especie::where('nome', 'LIKE', '%'.$request->input('busca').'%');
+        return view('especie.index', array('especies'=>$especies, 'busca' =>$request->input('busca')));
+     }
+
     public function create()
     {
-        //
+        return view('especie.create');
     }
 
     /**
@@ -34,7 +42,8 @@ class EspeciesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $especie = new Especie();
+        $especie->nome = $request->input('nome');
     }
 
     /**

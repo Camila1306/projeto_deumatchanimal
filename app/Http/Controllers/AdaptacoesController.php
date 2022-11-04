@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Adaptacao;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class AdaptacoesController extends Controller
 {
@@ -13,7 +16,8 @@ class AdaptacoesController extends Controller
      */
     public function index()
     {
-        //
+        $adaptacoes = Adaptacao::paginate(5);
+        return view('adaptacao.index', array('adaptacoes'=>$adaptacoes, 'busca'=>null));
     }
 
     /**
@@ -21,9 +25,14 @@ class AdaptacoesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function buscar(Request $request) {
+        $adaptacoes = Adaptacao::where('tipo', 'LIKE'. '%'.$request->input('busca').'%');
+        return view('adaptacao.index', array('adaptacoes'=>$adaptacoes, 'busca' => $request->input('busca')));
+     }
     public function create()
     {
-        //
+        return view('adaptacao.create');
     }
 
     /**
@@ -34,7 +43,8 @@ class AdaptacoesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $adaptacao = new Adaptacao();
+        $adaptacao->tipo = $request->input('tipo');
     }
 
     /**
@@ -79,6 +89,9 @@ class AdaptacoesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $adaptacao = Adaptacao::find($id);
+        $adaptacao->delete();
+        Session::flash('mensagem', 'Adaptação excluida com sucesso');
+        return redirect(url('adaptacoes/'));
     }
 }

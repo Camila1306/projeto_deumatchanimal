@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('deficiencias', function (Blueprint $table) {
             $table->id();
-            $table->string('deficiencia');
+            $table->string('tipo');
             $table->timestamps();
         });
     }
