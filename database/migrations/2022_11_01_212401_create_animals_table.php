@@ -17,25 +17,24 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
 
-            $table->unsignedBigInteger('especie_id');
-            $table->foreign('especie_id')->references('id')->on('especies');
+            $table->string('especie');
 
             $table->string('porte');
 
-            $table->unsignedBigInteger('adaptacao_id');
-            $table->foreign('adaptacao_id')->references('id')->on('adaptacoes');
+            $table->string('adaptacao');
 
-            $table->unsignedBigInteger('temperamento_id');
-            $table->foreign('temperamento_id')->references('id')->on('temperamentos');
+            $table->string('temperamento');
 
             $table->string('idade');
 
             $table->string('sexo');
 
-            $table->unsignedBigInteger('pelagem_id');
-            $table->foreign('pelagem_id')->references('id')->on('pelagens');
+            $table->string('tamanho_pelo');
+
+            $table->string('cor_pelo');
 
             $table->string('historia');
+            
             $table->timestamps();
         });
     }

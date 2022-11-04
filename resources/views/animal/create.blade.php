@@ -1,4 +1,3 @@
-@if ((Auth::check()) && (Auth::user()->isAdmin()))
 @extends('layouts.app')
 @section('title','Adicionar novo animal')
 @section('content')
@@ -15,15 +14,14 @@
   </ul>
 </div>
 @endif
-{{Form::open(['route'=>'animais.store', 'method'=>'POST'])}}
+{{Form::open(['route'=>'animais.store', 'method'=>'POST', 'enctype'=>'multipart/form-data'])}}
 {{Form::label('nome', 'Nome')}}
 {{Form::text('nome','',['class'=>'form-control', 'required', 'placeholder'=>'Exemplo:  Luna'])}}
 {{Form::label('especie', 'Espécie')}}
 {{Form::text('especie','',['class'=>'form-control', 'required', 'placeholder'=>'Selecione a espécie', 'list'=>'listespecie' ])}}
 <datalist id="listespecie">
-    @foreach ($especies as $especie)
-        <option value="{{$especie->id}}">{{$especie->nome}}</option>
-    @endforeach
+        <option value="gato" selected>Gato</option>
+        <option value="cachorro" >Cachorro</option>
 </datalist>
 {{Form::label('porte', 'Porte')}}
 {{Form::text('porte','',['class'=>'form-control', 'required', 'placeholder'=>'Selecione o porte', 'list'=>'listporte' ])}}
@@ -33,14 +31,12 @@
         <option value="grande" >Grande</option>
         <option value="gigante" >Gigante</option>
 </datalist>
-@foreach ($adaptacoes as $adaptacao)
 {{Form::label('adaptacao', 'Adaptação')}}
-{{Form::checkbox('adaptacao',$adaptacao->id,['class'=>'form-control', 'placeholder'=>$adaptacao->tipo ])}}
-@endforeach
-@foreach ($temperamentos as $temperamento)
+{{Form::text('adaptacao','',['class'=>'form-control', 'required', 'placeholder'=>'Exemplo: se adapta com crianças e cachorros' ])}}
+
 {{Form::label('temperamento', 'Temperamento')}}
-{{Form::checkbox('temperamento',$temperamento->id,['class'=>'form-control', 'placeholder'=>$temperamento->tipo ])}}
-@endforeach
+{{Form::text('temperamento','',['class'=>'form-control','required', 'placeholder'=>'Exemplo: calmo, bagunceiro' ])}}
+
 {{Form::label('idade', 'Idade')}}
 {{Form::text('idade','',['class'=>'form-control', 'required', 'placeholder'=>'Selecione a idade', 'list'=>'listidade' ])}}
 <datalist id="listidade">
@@ -57,26 +53,22 @@
 {{Form::label('tamanho_pelo', 'Tamanho do pelo')}}
 {{Form::text('tamanho_pelo','',['class'=>'form-control', 'required', 'placeholder'=>'Selecione o tamanho_pelo', 'list'=>'listtamanho_pelo' ])}}
 <datalist id="listtamanho_pelo">
-        <option value="curto" selected>Curto</option>
-        <option value="longo" >Longo</option>
-        <option value="encaracolado" >Encaracolado</option>
-        <option value="dupla" >Dupla</option>
-        <option value="longocurto" >Longo e Curto</option>
+        <option value="sem_pelo" selected>Sem pelos</option>
+        <option value="curto_liso" >Curto e liso</option>
+        <option value="curto_duro" >Curto e duro</option>
+        <option value="longo_liso" >Longo e liso</option>
+        <option value="longo_ondulado" >Longo  e ondulado/encaracolado</option>
+        <option value="duplo" >Duplo</option>
 </datalist>
-{{Form::label('pelagem', 'Cor do pelo')}}
-{{Form::text('pelagem','',['class'=>'form-control', 'required', 'placeholder'=>'Selecione a cor do pelo', 'list'=>'listpelagem' ])}}
-<datalist id="listpelagem">
-    @foreach ($pelagens as $pelagem)
-        <option value="{{$pelagem->id}}">{{$pelagem->cor}}</option>
-    @endforeach
-</datalist>
+{{Form::label('cor_pelo', 'Cor do pelo')}}
+{{Form::text('cor_pelo','',['class'=>'form-control', 'required', 'placeholder'=>'Exemplo: caramelo' ])}}
 {{Form::label('historia', 'História de vida')}}
 {{Form::text('historia','', ['class'=>'form-control', 'required', 'palceholder'=>'Informe a história do animal'])}}
-{{Form::label('adotado', 'Adotado')}}
-{{Form::text('adotado','', ['class'=>'form-control', 'required', 'palceholder'=>'sim/ não'])}}
 
+{{Form::label('foto', 'Foto')}}
+{{Form::file('foto', ['class' => 'form-control', 'id'=>'foto'])}}
+<br>
 {{Form::submit('Salvar',['class'=>'btn btn-outline-success'])}}
 {!!Form::button('Cancelar',['onclick'=>'javascript:history.go(-1)', 'class'=>'btn btn-outline-danger'])!!}
 {{ Form::close()}}
 @endsection
-@endif
