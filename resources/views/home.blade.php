@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card border-danger">
                 <div class="card-headers">
-                    <h3>De acordo com a Organização Mundial de Saúde(OMS), somente no Brasil, há cerca de 30 milhões de <br>animais abandonados,sendo aproximadamente 20 milhões de cães e 10 milhões de gatos</h3>
+                    <h3 class="text-center">De acordo com a Organização Mundial de Saúde(OMS), somente no Brasil, há cerca de 30 milhões de <br>animais abandonados,sendo aproximadamente 20 milhões de cães e 10 milhões de gatos</h3>
                 </div>
             </div>
             <div class="card border-danger">

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AnimaisController;
+use App\Http\Controllers\PetsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
@@ -18,8 +18,8 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 
-Route::get('animais/buscar', [AnimaisController::class, 'buscar']);
-Route::resource('animais', AnimaisController::class);
+Route::get('pets/buscar', [PetsController::class, 'buscar']);
+Route::resource('pets', PetsController::class);
 
 Auth::routes();
 
