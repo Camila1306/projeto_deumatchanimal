@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Adotante;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Session;
 
 class AdotantesController extends Controller
 {
@@ -14,7 +16,8 @@ class AdotantesController extends Controller
      */
     public function index()
     {
-        //
+        $adotantes = Adotante::all();
+        return view('Adotante.index', array('adotantes'=>$adotantes, 'busca'=>null));
     }
 
     /**
@@ -22,9 +25,15 @@ class AdotantesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function buscar(Request $request){
+        $adotantes = Adotante::where('nome', 'LIKE', '%'.$request->input('busca').'%')->orwhere('email', 'LIKE', '%'.$request->input('busca').'%')->orwhere('telefone', 'LIKE', '%'.$request->input('busca').'%')->orwhere('rua', 'LIKE', '%'.$request->input('busca').'%')->orwhere('bairro', 'LIKE', '%'.$request->input('busca').'%')->orwhere('CEP', 'LIKE', '%'.$request->input('busca').'%')->orwhere('cidade', 'LIKE', '%'.$request->input('busca').'%')->orwhere('estado', 'LIKE', '%'.$request->input('busca').'%')->orwhere('casa_ap', 'LIKE', '%'.$request->input('busca').'%')->orwhere('viagem', 'LIKE', '%'.$request->input('busca').'%')->orwhere('renda', 'LIKE', '%'.$request->input('busca').'%')->orwhere('adaptacao', 'LIKE', '%'.$request->input('busca').'%')->orwhere('hobbies', 'LIKE', '%'.$request->input('busca').'%')->orwhere('planejamento', 'LIKE', '%'.$request->input('busca').'%')->get();
+        return view('Adotante.index', array('adotantes'=>$adotantes, 'busca'=>$request->input('busca')));
+    }
+
     public function create()
     {
-        //
+        return view('Adotante.create');
     }
 
     /**
@@ -35,7 +44,49 @@ class AdotantesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'nome'=>'required',
+            'email'=>'required',
+            'telefone'=>'required',
+            'rua'=>'required',
+            'numero'=>'required',
+            'bairro'=>'required',
+            'CEP'=>'required',
+            'cidade'=>'required',
+            'estado'=>'required',
+            'casa_ap'=>'required',
+            'viagem'=>'required',
+            'renda'=>'required',
+            'adaptacao'=>'required',
+            'hobbies'=>'required',
+            'planejamento'=>'required',
+        ]);
+        $adotante = new Adotante();
+        $adotante->nome = $request->input('nome');
+        $adotante->email = $request->input('email');
+        $adotante->telefone = $request->input('telefone');
+        $adotante->rua = $request->input('rua');
+        $adotante->numero = $request->input('numero');
+        $adotante->bairro = $request->input('bairro');
+        $adotante->CEP = $request->input('CEP');
+        $adotante->cidade = $request->input('cidade');
+        $adotante->estado = $request->input('estado');
+        $adotante->casa_ap = $request->input('casa_ap');
+        $adotante->viagem = $request->input('viagem');
+        $adotante->renda = $request->input('renda');
+        $adotante->adaptacao = $request->input('adaptacao');
+        $adotante->hobbies = $request->input('hobbies');
+        $adotante->planejamento = $request->input('planejamento');
+        if($adotante->save()){
+            if($request->hasFile('foto')){
+                $imagem = $request->file('foto');
+                $nomearquivo = md5($adotante->id).".".$imagem->getClientOriginalExtension();
+                $request->file('foto')->move(public_path('./img/adotantes'), $nomearquivo);
+            } 
+            Session::flash('mensagem', 'Cadastro de adotante salvo com sucesso');
+            return redirect('adotantes');
+        }
+
     }
 
     /**
@@ -44,9 +95,10 @@ class AdotantesController extends Controller
      * @param  \App\Models\Adotante  $adotante
      * @return \Illuminate\Http\Response
      */
-    public function show(Adotante $adotante)
+    public function show($id)
     {
-        //
+        $adotante = Adotante::find($id);
+        return view('Adotante.show', array('adotante'=>$adotante));
     }
 
     /**
@@ -55,9 +107,10 @@ class AdotantesController extends Controller
      * @param  \App\Models\Adotante  $adotante
      * @return \Illuminate\Http\Response
      */
-    public function edit(Adotante $adotante)
+    public function edit($id)
     {
-        //
+        $adotante = Adotante::find($id);
+        return view('Adotante.edit', array('adotante'=>$adotante));
     }
 
     /**
@@ -69,7 +122,48 @@ class AdotantesController extends Controller
      */
     public function update(Request $request, Adotante $adotante)
     {
-        //
+        $this->validate($request,[
+            'nome'=>'required',
+            'email'=>'required',
+            'telefone'=>'required',
+            'rua'=>'required',
+            'numero'=>'required',
+            'bairro'=>'required',
+            'CEP'=>'required',
+            'cidade'=>'required',
+            'estado'=>'required',
+            'casa_ap'=>'required',
+            'viagem'=>'required',
+            'renda'=>'required',
+            'adaptacao'=>'required',
+            'hobbies'=>'required',
+            'planejamento'=>'required',
+        ]);
+        if($request->hasFile('foto')){
+            $imagem = $request->file('foto');
+            $nomearquivo = md5($adotante->id).".".$imagem->getClientOriginalExtension();
+            $request->file('foto')->move(public_path('./img/adotantes'), $nomearquivo);
+        } 
+        $adotante = new Adotante();
+        $adotante->nome = $request->input('nome');
+        $adotante->email = $request->input('email');
+        $adotante->telefone = $request->input('telefone');
+        $adotante->rua = $request->input('rua');
+        $adotante->numero = $request->input('numero');
+        $adotante->bairro = $request->input('bairro');
+        $adotante->CEP = $request->input('CEP');
+        $adotante->cidade = $request->input('cidade');
+        $adotante->estado = $request->input('estado');
+        $adotante->casa_ap = $request->input('casa_ap');
+        $adotante->viagem = $request->input('viagem');
+        $adotante->renda = $request->input('renda');
+        $adotante->adaptacao = $request->input('adaptacao');
+        $adotante->hobbies = $request->input('hobbies');
+        $adotante->planejamento = $request->input('planejamento');
+        if($adotante->save()){
+            Session::flash('mensagem', 'Cadastro de adotante alterado com sucesso');
+            return redirect()->back();
+        }
     }
 
     /**
@@ -78,8 +172,11 @@ class AdotantesController extends Controller
      * @param  \App\Models\Adotante  $adotante
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Adotante $adotante)
+    public function destroy($id)
     {
-        //
+        $adotante = Adotante::find($id);
+        $adotante->delete();
+        Session::flash('mensagem', 'Adotante excluído com sucesso');
+        return redirect(url('adotantes/'));
     }
 }

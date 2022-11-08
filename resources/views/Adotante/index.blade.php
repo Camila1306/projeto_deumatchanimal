@@ -36,14 +36,18 @@
                 <th>Nome</th>
                 <th>E-mail</th>
                 <th>Telefone</th>
-                <th></th>
+                <th>Rua</th>
+                <th>Nº</th>
+                <th>Bairro</th>
+                <th>CEP</th>
+                <th>Cidade</th>
+                <th>Estado</th>
+                <th>Casa/Apartamento</th>
+                <th>Viagem</th>
+                <th>Renda</th>
                 <th>Adaptação</th>
-                <th>Temperamento</th>
-                <th>Idade</th>
-                <th>Sexo</th>
-                <th>Tamanho do Pelo</th>
-                <th>Cor do Pelo</th>
-                <th>Historia</th>
+                <th>Hobbies</th>
+                <th>Planejamento</th>
 
             </tr>
             @foreach ($adotantes as $adotante)
@@ -55,31 +59,46 @@
                     {{$adotante->nome}}
                 </td>
                 <td>
-                    {{$adotante->especie}}
+                    {{$adotante->email}}
                 </td>
                 <td>
-                    {{$adotante->porte}}
+                    {{$adotante->telefone}}
                 </td>
                 <td>
-                    {{$adotante->adptacao}}
+                    {{$adotante->rua}}
                 </td>
                 <td>
-                    {{$adotante->temperamento}}
+                    {{$adotante->numero}}
                 </td>
                 <td>
-                    {{$adotante->idade}}
+                    {{$adotante->bairro}}
                 </td>
                 <td>
-                    {{$adotante->sexo}}
+                    {{$adotante->CEP}}
                 </td>
                 <td>
-                    {{$adotante->tamanho_pelo}}
+                    {{$adotante->cidade}}
                 </td>
                 <td>
-                    {{$adotante->cor_pelo}}
+                    {{$adotante->estado}}
                 </td>
                 <td>
-                    {{$adotante->historia}}
+                    {{$adotante->casa_ap}}
+                </td>
+                <td>
+                    {{$adotante->viagem}}
+                </td>
+                <td>
+                    {{$adotante->renda}}
+                </td>
+                <td>
+                    {{$adotante->adaptacao}}
+                </td>
+                <td>
+                    {{$adotante->hobbies}}
+                </td>
+                <td>
+                    {{$adotante->planejamento}}
                 </td>
             </tr>
             @endforeach

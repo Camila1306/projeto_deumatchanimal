@@ -29,6 +29,8 @@
 {{Form::text('bairro','',['class'=>'form-control', 'required', 'placeholder'=>'Bairro'])}}
 {{Form::label('CEP', 'CEP')}}
 {{Form::text('CEP','',['class'=>'form-control', 'required', 'placeholder'=>'CEP'])}}
+{{Form::label('cidade', 'Cidade')}}
+{{Form::text('cidade','',['class'=>'form-control', 'required', 'placeholder'=>'Cidade'])}}
 {{Form::label('estado', 'Estado')}}
 {{Form::text('estado','',['class'=>'form-control', 'required', 'placeholder'=>'Estado'])}}
 

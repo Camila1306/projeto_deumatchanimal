@@ -1,7 +1,7 @@
 @extends('layouts.app')
-@section('title', 'Listagem de Pets')
+@section('title', 'Listagem de Adoção')
 @section('content')
-    <h1>Listagem de Pets</h1>
+    <h1>Listagem de Adoção</h1>
     @if(Session::has('mensagem'))
     <div class="alert alert-success">
             {{Session::get('mensagem')}}
@@ -9,16 +9,16 @@
     @endif
     <br>
 
-    {{Form::open(['url'=>'pets/buscar', 'method'=>'GET'])}}
+    {{Form::open(['url'=>'adotados/buscar', 'method'=>'GET'])}}
     <div class="row">
 
             <div class="col-sm-3">
-                <a class="btn btn-outline-success" href="{{url('pets/create')}}">Adicionar</a>
+                <a class="btn btn-outline-success" href="{{url('adotados/create')}}">Adicionar</a>
             </div>
         <div class="col-sm-9">    
             <div class="input-group m1-5">
                 @if($busca !== null)
-                    &nbsp;<a class="btn btn-outline-secondary" href="{{url('pets/')}}">Todos</a>&nbsp;
+                    &nbsp;<a class="btn btn-outline-secondary" href="{{url('adotados/')}}">Todos</a>&nbsp;
                 @endif
                 {{Form::text('busca', $busca, ['class'=>'from-control', 'required', 'placeholder'=>'buscar'])}}
                 &nbsp;
@@ -33,52 +33,39 @@
        <table  class="table table-striped table-hover">
             <tr class="text-center">
                 <th>Id</th>
-                <th>Nome</th>
-                <th>Espécie</th>
-                <th>Porte</th>
-                <th>Adaptação</th>
-                <th>Temperamento</th>
-                <th>Idade</th>
-                <th>Sexo</th>
-                <th>Tamanho do Pelo</th>
-                <th>Cor do Pelo</th>
-                <th>Historia</th>
-
+                <th>Pet</th>
+                <th>Adotante</th>
+                <th>Data</th>
+                <th>Obs</th>
+                <th>Data 1º visita</th>
+                <th>Data 2º visita</th>
+                <th>Data 3º visita</th>
             </tr>
-            @foreach ($pets as $pet)
+            @foreach ($adotados as $adotado)
             <tr>
                 <td>
-                    <a href="{{url('pets/'.$pet->id)}}">{{$pet->id}}</a>
+                    <a href="{{url('adotados/'.$adotado->id)}}">{{$adotado->id}}</a>
                 </td>
                 <td>
-                    {{$pet->nome}}
+                    {{$adotado->pet_id}}
                 </td>
                 <td>
-                    {{$pet->especie}}
+                    {{$adotado->adotante_id}} - {{$adotado->pet->nome}}
                 </td>
                 <td>
-                    {{$pet->porte}}
+                    {{\Carbon\Carbon::create($adotado->datahora)->format('d/m/Y H:i:s')}}
                 </td>
                 <td>
-                    {{$pet->adaptacao}}
+                    {{$adotado->obs}}
                 </td>
                 <td>
-                    {{$pet->temperamento}}
+                    {{!!$adotado->data_visita_um!!}}
                 </td>
                 <td>
-                    {{$pet->idade}}
+                    {{!!$adotado->data_visita_dois!!}}
                 </td>
                 <td>
-                    {{$pet->sexo}}
-                </td>
-                <td>
-                    {{$pet->tamanho_pelo}}
-                </td>
-                <td>
-                    {{$pet->cor_pelo}}
-                </td>
-                <td>
-                    {{$pet->historia}}
+                    {{!!$adotado->data_visita_tres!!}}
                 </td>
             </tr>
             @endforeach

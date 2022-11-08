@@ -14,7 +14,7 @@
   </ul>
 </div>
 @endif
-{{Form::open(['route'=>'adotantes.update', 'method'=>'POST', 'enctype'=>'multipart/form-data'])}}
+{{Form::open(['route'=>['adotantes.update', $adotante->id], 'method'=>'PUT', 'enctype'=>'multipart/form-data'])}}
 {{Form::label('nome', 'Nome')}}
 {{Form::text('nome',$adotante->nome,['class'=>'form-control', 'required', 'placeholder'=>'Nome completo'])}}
 {{Form::label('email', 'E-mail')}}
@@ -22,7 +22,7 @@
 {{Form::label('telefone', 'Telefone')}}
 {{Form::text('telefone',$adotante->telefone,['class'=>'form-control', 'required', 'placeholder'=>'(99) 99999-9999', 'pattern'=>'(\([0-9]{2}\))\s([9]{1})?([0-9]{4,5})-([0-9]{4})', 'title'=>'Número informado deve ser no formato (99) 99999-9999'])}}
 {{Form::label('rua', 'Rua/ Avenida')}}
-{{Form::text('rua',$adotante->,['class'=>'form-control', 'required', 'placeholder'=>'Rua/Avenida'])}}
+{{Form::text('rua',$adotante->rua,['class'=>'form-control', 'required', 'placeholder'=>'Rua/Avenida'])}}
 {{Form::label('numero', 'Número')}}
 {{Form::text('numero',$adotante->numero,['class'=>'form-control', 'required', 'placeholder'=>'Número'])}}
 {{Form::label('bairro', 'Bairro')}}
@@ -47,7 +47,7 @@
 {{Form::label('planejamento', 'Planejamento para seu novo amigo')}}
 {{Form::text('planejamento',$adotante->planejamento,['class'=>'form-control', 'required', 'placeholder'=>'Exemplo: Aos sábados iremos passear no parque.' ])}}
 
-{{Form::label('foto', 'Foto da residencia')}}
+{{Form::label('foto', 'Foto')}}
 {{Form::file('foto', ['class' => 'form-control', 'id'=>'foto'])}}
 <br>
 {{Form::submit('Salvar',['class'=>'btn btn-outline-success'])}}
