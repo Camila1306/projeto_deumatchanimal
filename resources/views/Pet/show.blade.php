@@ -55,4 +55,33 @@
 </div>
 <br>
 
+<div class="card w-70 m-auto">
+    <div class="card-header">
+        <h1>Adotados</h1>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped table-hover">
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Data</th>
+                <th>Data 1º visita</th>
+                <th>Data 2º visita</th>
+                <th>Data 3º visita</th>
+            </tr>
+            @foreach ($pet->adotados as $adotado)
+            <tr>
+                <td><a href="{{url('adotados/'.$adotado->id)}}">{{$adotado->id}}</a></td>
+                <td>{{$adotado->pet_id}} - {{$adotado->adotante->nome}}</td>
+                <td>{{\Carbon\Carbon::create($adotado->datahora)->format('d/m/Y H:i:s')}}</td>
+                <td>{!!$adotado->visitaum!!}</td>
+                <td>{!!$adotado->visitadois!!}</td>
+                <td>{!!$adotado->visitatres!!}</td>
+            </tr>
+                
+            @endforeach
+        </table>
+    </div>
+</div>
+
 @endsection

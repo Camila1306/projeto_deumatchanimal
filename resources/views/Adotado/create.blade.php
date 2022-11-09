@@ -32,7 +32,7 @@
 {{Form::label('datahora','Data da adoção')}}
 {{Form::text('datahora', \Carbon\Carbon::now()->format('d/m/Y H:i:s'), ['class'=>'form-control', 'required', 'placeholder' => 'Data', 'rows'=>'8'])}}
 {{Form::label('obs', 'Obs')}}
-{{Form::text('obs','',['class'=>'form-control','required', 'placeholder'=>'Observação' ])}}
+{{Form::text('obs','',['class'=>'form-control', 'placeholder'=>'Observação' ])}}
 
 {{Form::submit('Salvar',['class'=>'btn btn-outline-success'])}}
 {!!Form::button('Cancelar',['onclick'=>'javascript:history.go(-1)', 'class'=>'btn btn-outline-danger'])!!}

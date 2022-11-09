@@ -104,5 +104,6 @@
             @endforeach
        </table> 
 
+       {{$adotantes->links()}}
 
 @endsection

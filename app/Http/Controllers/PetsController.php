@@ -16,7 +16,7 @@ class PetsController extends Controller
      */
     public function index()
     {
-        $pets = Pet::all();
+        $pets = Pet::paginate(5);
         return view('pet.index', array('pets'=>$pets, 'busca'=>null));
     }
 

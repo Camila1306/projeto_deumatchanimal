@@ -71,5 +71,5 @@
             @endforeach
        </table> 
 
-
+       {{$adotados->links()}}
 @endsection

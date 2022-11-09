@@ -26,8 +26,12 @@ Route::resource('pets', PetsController::class);
 Route::get('adotantes/buscar', [AdotantesController::class, 'buscar']);
 Route::resource('adotantes', AdotantesController::class);
 
-Route::get('adotado/buscar', [AdotadosController::class, 'buscar']);
-Route::resource('adotado', AdotadosController::class);
+Route::get('adotados/buscar', [AdotadosController::class, 'buscar']);
+Route::put('adotados/{adotado}/visitarum',[AdotadosController::class,'visitarum'])->name('adotado.visitarum');
+Route::put('adotados/{adotado}/visitardois',[AdotadosController::class,'visitardois'])->name('adotado.visitardois');
+Route::put('adotados/{adotado}/visitartres',[AdotadosController::class,'visitartres'])->name('adotado.visitartres');
+Route::resource('adotados', AdotadosController::class);
+
 
 Auth::routes();
 

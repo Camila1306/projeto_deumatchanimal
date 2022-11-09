@@ -16,7 +16,7 @@ class AdotantesController extends Controller
      */
     public function index()
     {
-        $adotantes = Adotante::all();
+        $adotantes = Adotante::paginate(5);
         return view('Adotante.index', array('adotantes'=>$adotantes, 'busca'=>null));
     }
 

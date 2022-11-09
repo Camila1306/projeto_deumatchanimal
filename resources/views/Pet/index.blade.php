@@ -83,6 +83,89 @@
             </tr>
             @endforeach
        </table> 
+       <div class="card-group">
+           @foreach ($pets as $pet)
+           <div class="card">
+            @php
+            $nomeimagem = "";
+            if(file_exists("./img/pets/".md5($pet->id).".jpg")){
+                $nomeimagem = "./img/pets/".md5($pet->id).".jpg";
+            } elseif(file_exists("./img/pets/".md5($pet->id).".png")){
+                $nomeimagem = "./img/pets/".md5($pet->id).".png";
+            } elseif(file_exists("./img/pets/".md5($pet->id).".gif")){
+                $nomeimagem = "./img/pets/".md5($pet->id).".gif";
+            } elseif(file_exists("./img/pets/".md5($pet->id).".webp")){
+                $nomeimagem = "./img/pets/".md5($pet->id).".webp";
+            } elseif(file_exists("./img/pets/".md5($pet->id).".jpeg")){
+                $nomeimagem = "./img/pets/".md5($pet->id).".jpeg";
+            } elseif(file_exists("./img/pets/".md5($pet->id).".jfif")){
+                $nomeimagem = "./img/pets/".md5($pet->id).".jfif";
+            } else {
+                $nomeimagem = "./img/pets/semfoto.jfif";
+            }
+            @endphp
+          {{Html::image(asset($nomeimagem), 'Foto de '.$pet->nome,)}}
+          <div class="card-body">
+            <h5 class="card-title"><a href="{{url('pets/'.$pet->id)}}">ID: {{$pet->id}}</a></h5>
+            <p class="card-text">Nome: {{$pet->nome}}</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+          </div>
+        </div>
+        <div class="card">
+            @php
+            $nomeimagem = "";
+            if(file_exists("./img/pets/".md5($pet->id).".jpg")){
+                $nomeimagem = "./img/pets/".md5($pet->id).".jpg";
+            } elseif(file_exists("./img/pets/".md5($pet->id).".png")){
+                $nomeimagem = "./img/pets/".md5($pet->id).".png";
+            } elseif(file_exists("./img/pets/".md5($pet->id).".gif")){
+                $nomeimagem = "./img/pets/".md5($pet->id).".gif";
+            } elseif(file_exists("./img/pets/".md5($pet->id).".webp")){
+                $nomeimagem = "./img/pets/".md5($pet->id).".webp";
+            } elseif(file_exists("./img/pets/".md5($pet->id).".jpeg")){
+                $nomeimagem = "./img/pets/".md5($pet->id).".jpeg";
+            } elseif(file_exists("./img/pets/".md5($pet->id).".jfif")){
+                $nomeimagem = "./img/pets/".md5($pet->id).".jfif";
+            } else {
+                $nomeimagem = "./img/pets/semfoto.jfif";
+            }
+            @endphp
+          {{Html::image(asset($nomeimagem), 'Foto de '.$pet->nome,)}}
+          <div class="card-body">
+            <h5 class="card-title"><a href="{{url('pets/'.$pet->id)}}">ID: {{$pet->id}}</a></h5>
+            <p class="card-text">Nome: {{$pet->nome}}</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+          </div>
+        </div>
+        <div class="card">
+            @php
+            $nomeimagem = "";
+            if(file_exists("./img/pets/".md5($pet->id).".jpg")){
+                $nomeimagem = "./img/pets/".md5($pet->id).".jpg";
+            } elseif(file_exists("./img/pets/".md5($pet->id).".png")){
+                $nomeimagem = "./img/pets/".md5($pet->id).".png";
+            } elseif(file_exists("./img/pets/".md5($pet->id).".gif")){
+                $nomeimagem = "./img/pets/".md5($pet->id).".gif";
+            } elseif(file_exists("./img/pets/".md5($pet->id).".webp")){
+                $nomeimagem = "./img/pets/".md5($pet->id).".webp";
+            } elseif(file_exists("./img/pets/".md5($pet->id).".jpeg")){
+                $nomeimagem = "./img/pets/".md5($pet->id).".jpeg";
+            } elseif(file_exists("./img/pets/".md5($pet->id).".jfif")){
+                $nomeimagem = "./img/pets/".md5($pet->id).".jfif";
+            } else {
+                $nomeimagem = "./img/pets/semfoto.jfif";
+            }
+            @endphp
+          {{Html::image(asset($nomeimagem), 'Foto de '.$pet->nome,)}}
+          <div class="card-body">
+            <h5 class="card-title"><a href="{{url('pets/'.$pet->id)}}">ID: {{$pet->id}}</a></h5>
+            <p class="card-text">Nome: {{$pet->nome}}</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+          </div>
+        </div>
 
+        @endforeach
+      </div>
+       {{$pets->links()}}
 
 @endsection
