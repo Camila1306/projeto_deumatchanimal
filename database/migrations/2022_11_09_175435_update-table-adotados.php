@@ -14,9 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('adotados', function(Blueprint $table){
-            $table->dateTime('data_visita_um')->nullable()->change();
-            $table->dateTime('data_visita_dois')->nullable()->change();
-            $table->dateTime('data_visita_tres')->nullable()->change();
+            $table->dateTime('datavisita')->nullable()->change();
         });
     }
 

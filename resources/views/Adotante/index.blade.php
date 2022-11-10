@@ -30,79 +30,40 @@
     </div>
     {{Form::close()}}
     <br><br>
-       <table  class="table table-striped table-hover">
-            <tr class="text-center">
-                <th>Id</th>
-                <th>Nome</th>
-                <th>E-mail</th>
-                <th>Telefone</th>
-                <th>Rua</th>
-                <th>Nº</th>
-                <th>Bairro</th>
-                <th>CEP</th>
-                <th>Cidade</th>
-                <th>Estado</th>
-                <th>Casa/Apartamento</th>
-                <th>Viagem</th>
-                <th>Renda</th>
-                <th>Adaptação</th>
-                <th>Hobbies</th>
-                <th>Planejamento</th>
-
-            </tr>
-            @foreach ($adotantes as $adotante)
-            <tr>
-                <td>
-                    <a href="{{url('adotantes/'.$adotante->id)}}">{{$adotante->id}}</a>
-                </td>
-                <td>
-                    {{$adotante->nome}}
-                </td>
-                <td>
-                    {{$adotante->email}}
-                </td>
-                <td>
-                    {{$adotante->telefone}}
-                </td>
-                <td>
-                    {{$adotante->rua}}
-                </td>
-                <td>
-                    {{$adotante->numero}}
-                </td>
-                <td>
-                    {{$adotante->bairro}}
-                </td>
-                <td>
-                    {{$adotante->CEP}}
-                </td>
-                <td>
-                    {{$adotante->cidade}}
-                </td>
-                <td>
-                    {{$adotante->estado}}
-                </td>
-                <td>
-                    {{$adotante->casa_ap}}
-                </td>
-                <td>
-                    {{$adotante->viagem}}
-                </td>
-                <td>
-                    {{$adotante->renda}}
-                </td>
-                <td>
-                    {{$adotante->adaptacao}}
-                </td>
-                <td>
-                    {{$adotante->hobbies}}
-                </td>
-                <td>
-                    {{$adotante->planejamento}}
-                </td>
-            </tr>
-            @endforeach
-       </table> 
+       <div class="card-group">
+        @foreach ($adotantes as $adotante)
+     <div class="card mb-3" style="max-width: 540px;">
+                     @php
+                 $nomeimagem = "";
+                 if(file_exists("./img/adotantes/".md5($adotante->id).".jpg")){
+                     $nomeimagem = "./img/adotantes/".md5($adotante->id).".jpg";
+                 } elseif(file_exists("./img/adotantes/".md5($adotante->id).".png")){
+                     $nomeimagem = "./img/adotantes/".md5($adotante->id).".png";
+                 } elseif(file_exists("./img/adotantes/".md5($adotante->id).".gif")){
+                     $nomeimagem = "./img/adotantes/".md5($adotante->id).".gif";
+                 } elseif(file_exists("./img/adotantes/".md5($adotante->id).".webp")){
+                     $nomeimagem = "./img/adotantes/".md5($adotante->id).".webp";
+                 } elseif(file_exists("./img/adotantes/".md5($adotante->id).".jpeg")){
+                     $nomeimagem = "./img/adotantes/".md5($adotante->id).".jpeg";
+                 } elseif(file_exists("./img/adotantes/".md5($adotante->id).".jfif")){
+                     $nomeimagem = "./img/adotantes/".md5($adotante->id).".jfif";
+                 } else {
+                     $nomeimagem = "./img/adotantes/semfoto.jfif";
+                 }
+                 @endphp
+             {{Html::image(asset($nomeimagem), 'Foto de '.$adotante->nome,)}}
+         <div class="card-body">
+           <h5 class="card-title"><a href="{{url('adotantes/'.$adotante->id)}}"> {{$adotante->nome}}</a></h5>
+           <p class="card-text">{{$adotante->planejamento}}</p>
+         </div>
+         <ul class="list-group list-group-flush">
+           <li class="list-group-item"><strong>Cidade: </strong> {{$adotante->cidade}}</li>
+           <li class="list-group-item"> <strong>Telefone:</strong> {{$adotante->telefone}}</li>
+           <li class="list-group-item"><strong>Email:</strong> {{$adotante->email}}</li>
+         </ul>
+     </div>
+     @endforeach
+   </div>
 
        {{$adotantes->links()}}
 

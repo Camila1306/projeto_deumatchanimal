@@ -70,18 +70,14 @@
                 <th>ID</th>
                 <th>Pet</th>
                 <th>Data</th>
-                <th>Data 1º visita</th>
-                <th>Data 2º visita</th>
-                <th>Data 3º visita</th>
+                <th>Data visita</th>
             </tr>
             @foreach ($adotante->adotados as $adotado)
             <tr>
                 <td><a href="{{url('adotados/'.$adotado->id)}}">{{$adotado->id}}</a></td>
                 <td>{{$adotado->pet_id}} - {{$adotado->pet->nome}}</td>
                 <td>{{\Carbon\Carbon::create($adotado->datahora)->format('d/m/Y H:i:s')}}</td>
-                <td>{!!$adotado->visitaum!!}</td>
-                <td>{!!$adotado->visitadois!!}</td>
-                <td>{!!$adotado->visitatres!!}</td>
+                <td>{!!$adotado->visita!!}</td>
             </tr>
                 
             @endforeach

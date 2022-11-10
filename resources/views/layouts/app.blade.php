@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Deu Match Animal') }}</title>
+    <title>{{ config('app.name', 'DeuMatchAnimal') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -81,10 +81,13 @@
         </nav>
 
         <main class="py-4">
-            <div class="container">
-                @yield('content')
+            <div class="imagem">
+                <div class="container" >
+                    @yield('content')
+                </div>
             </div>
         </main>
     </div>
 </body>
 </html>
+

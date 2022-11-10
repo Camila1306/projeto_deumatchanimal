@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\Models\Pet;
@@ -34,7 +35,12 @@ class PetsController extends Controller
 
     public function create()
     {
-        return view('pet.create');
+        if (Auth::check() && Auth::user()->isAdmin()) {
+            return view('pet.create');
+        } else {
+            return redirect('login');
+        }
+
     }
 
     /**
@@ -45,38 +51,43 @@ class PetsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'nome' => 'required',
-            'especie' => 'required',
-            'porte' => 'required',
-            'adaptacao' => 'required',
-            'temperamento' => 'required',
-            'idade' => 'required',
-            'sexo' => 'required',
-            'tamanho_pelo' => 'required',
-            'cor_pelo' => 'required',
-            'historia' => 'required',
+        if (Auth::check() && Auth::user()->isAdmin()){
 
-        ]);
-        $pet = new Pet();
-        $pet->nome = $request->input('nome');
-        $pet->especie = $request->input('especie');
-        $pet->porte = $request->input('porte');
-        $pet->adaptacao = $request->input('adaptacao');
-        $pet->temperamento = $request->input('temperamento');
-        $pet->idade = $request->input('idade');
-        $pet->sexo = $request->input('sexo');
-        $pet->tamanho_pelo = $request->input('tamanho_pelo');
-        $pet->cor_pelo = $request->input('cor_pelo');
-        $pet->historia = $request->input('historia');
-        if($pet->save()){
-            if($request->hasFile('foto')){
-                $imagem = $request->file('foto');
-                $nomearquivo = md5($pet->id).".".$imagem->getClientOriginalExtension();
-                $request->file('foto')->move(public_path('./img/pets'), $nomearquivo);
-            } 
-            Session::flash('mensagem', 'Cadastro de pet salvo com sucesso');
-            return redirect('pets');
+            $this->validate($request, [
+                'nome' => 'required',
+                'especie' => 'required',
+                'porte' => 'required',
+                'adaptacao' => 'required',
+                'temperamento' => 'required',
+                'idade' => 'required',
+                'sexo' => 'required',
+                'tamanho_pelo' => 'required',
+                'cor_pelo' => 'required',
+                'historia' => 'required',
+    
+            ]);
+            $pet = new Pet();
+            $pet->nome = $request->input('nome');
+            $pet->especie = $request->input('especie');
+            $pet->porte = $request->input('porte');
+            $pet->adaptacao = $request->input('adaptacao');
+            $pet->temperamento = $request->input('temperamento');
+            $pet->idade = $request->input('idade');
+            $pet->sexo = $request->input('sexo');
+            $pet->tamanho_pelo = $request->input('tamanho_pelo');
+            $pet->cor_pelo = $request->input('cor_pelo');
+            $pet->historia = $request->input('historia');
+            if($pet->save()){
+                if($request->hasFile('foto')){
+                    $imagem = $request->file('foto');
+                    $nomearquivo = md5($pet->id).".".$imagem->getClientOriginalExtension();
+                    $request->file('foto')->move(public_path('./img/pets'), $nomearquivo);
+                } 
+                Session::flash('mensagem', 'Cadastro de pet salvo com sucesso');
+                return redirect('pets');
+            }
+        } else {
+            return redirect('login');
         }
     }
 
@@ -100,8 +111,12 @@ class PetsController extends Controller
      */
     public function edit($id)
     {
-        $pet = Pet::find($id);
-        return view('pet.edit', array('pet'=>$pet));
+        if (Auth::check() && Auth::user()->isAdmin()){
+            $pet = Pet::find($id);
+            return view('pet.edit', array('pet'=>$pet));
+        } else {
+            return redirect('login');
+        }
     }
 
     /**
@@ -113,38 +128,43 @@ class PetsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'nome' => 'required',
-            'especie' => 'required',
-            'porte' => 'required',
-            'adaptacao' => 'required',
-            'temperamento' => 'required',
-            'idade' => 'required',
-            'sexo' => 'required',
-            'tamanho_pelo' => 'required',
-            'cor_pelo' => 'required',
-            'historia' => 'required',
+        if (Auth::check() && Auth::user()->isAdmin()){
 
-        ]);
-        $pet = Pet::find($id);
-        if($request->hasFile('foto')){
-            $imagem = $request->file('foto');
-            $nomearquivo = md5($pet->id).".".$imagem->getClientOriginalExtension();
-            $request->file('foto')->move(public_path('./img/pets'), $nomearquivo);
-        }
-        $pet->nome = $request->input('nome');
-        $pet->especie = $request->input('especie');
-        $pet->porte = $request->input('porte');
-        $pet->adaptacao = $request->input('adaptacao');
-        $pet->temperamento = $request->input('temperamento');
-        $pet->idade = $request->input('idade');
-        $pet->sexo = $request->input('sexo');
-        $pet->tamanho_pelo = $request->input('tamanho_pelo');
-        $pet->cor_pelo = $request->input('cor_pelo');
-        $pet->historia = $request->input('historia');
-        if($pet->save()){
-            Session::flash('mensagem', 'Cadastro do pet alterado com sucesso');
-            return redirect()->back();
+            $this->validate($request, [
+                'nome' => 'required',
+                'especie' => 'required',
+                'porte' => 'required',
+                'adaptacao' => 'required',
+                'temperamento' => 'required',
+                'idade' => 'required',
+                'sexo' => 'required',
+                'tamanho_pelo' => 'required',
+                'cor_pelo' => 'required',
+                'historia' => 'required',
+    
+            ]);
+            $pet = Pet::find($id);
+            if($request->hasFile('foto')){
+                $imagem = $request->file('foto');
+                $nomearquivo = md5($pet->id).".".$imagem->getClientOriginalExtension();
+                $request->file('foto')->move(public_path('./img/pets'), $nomearquivo);
+            }
+            $pet->nome = $request->input('nome');
+            $pet->especie = $request->input('especie');
+            $pet->porte = $request->input('porte');
+            $pet->adaptacao = $request->input('adaptacao');
+            $pet->temperamento = $request->input('temperamento');
+            $pet->idade = $request->input('idade');
+            $pet->sexo = $request->input('sexo');
+            $pet->tamanho_pelo = $request->input('tamanho_pelo');
+            $pet->cor_pelo = $request->input('cor_pelo');
+            $pet->historia = $request->input('historia');
+            if($pet->save()){
+                Session::flash('mensagem', 'Cadastro do pet alterado com sucesso');
+                return redirect()->back();
+            }
+        } else {
+            return redirect('login');
         }
     }
 
@@ -154,11 +174,18 @@ class PetsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $pet = Pet::find($id);
-        $pet->delete();
-        Session::flash('mensagem', 'Cadastro do pet excluido com sucesso');
-        return redirect(url('pets/'));
+        if (Auth::check() && Auth::user()->isAdmin()){
+            $pet = Pet::find($id);
+            if (isset($request->foto)) {
+                unlink($request->foto);
+            }
+            $pet->delete();
+            Session::flash('mensagem', 'Cadastro do pet excluido com sucesso');
+            return redirect(url('pets/'));
+        } else {
+            return redirect('login');
+        }
     }
 }

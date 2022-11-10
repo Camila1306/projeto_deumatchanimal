@@ -37,12 +37,10 @@
                 <th>Adotante</th>
                 <th>Data</th>
                 <th>Obs</th>
-                <th>Data 1º visita</th>
-                <th>Data 2º visita</th>
-                <th>Data 3º visita</th>
+                <th>Data visita</th>
             </tr>
             @foreach ($adotados as $adotado)
-            <tr>
+            <tr class="text-center">
                 <td>
                     <a href="{{url('adotados/'.$adotado->id)}}">{{$adotado->id}}</a>
                 </td>
@@ -59,13 +57,7 @@
                     {{$adotado->obs}}
                 </td>
                 <td>
-                    {{!!$adotado->data_visita_um!!}}
-                </td>
-                <td>
-                    {{!!$adotado->data_visita_dois!!}}
-                </td>
-                <td>
-                    {{!!$adotado->data_visita_tres!!}}
+                    {{!!$adotado->datavisita!!}}
                 </td>
             </tr>
             @endforeach

@@ -43,14 +43,18 @@
         </p>
     </div>
     <div class="card-footer">
+        @if ((Auth::check()) && (Auth::user()->isAdmin()))
             {{Form::open(['route' => ['pets.destroy', $pet->id],'method' => 'DELETE'])}}
             @if ($nomeimagem !== "./img/pets/semfoto.png")
                 {{Form::hidden('foto', $nomeimagem)}}
             @endif
                 <a href="{{url('pets/'.$pet->id.'/edit')}}" class="btn btn-outline-info">Alterar</a>
                 {{Form::submit('Excluir', ['class' => 'btn btn-outline-danger'])}}
+        @endif
         <a href="{{url('pets/')}}" class="btn btn-outline-secondary">Voltar</a>
+        @if ((Auth::check()) && (Auth::user()->isAdmin()))
             {{Form::close()}}
+        @endif
     </div>
 </div>
 <br>
@@ -65,18 +69,15 @@
                 <th>ID</th>
                 <th>Nome</th>
                 <th>Data</th>
-                <th>Data 1º visita</th>
-                <th>Data 2º visita</th>
-                <th>Data 3º visita</th>
+                <th>Data visita</th>
             </tr>
             @foreach ($pet->adotados as $adotado)
             <tr>
                 <td><a href="{{url('adotados/'.$adotado->id)}}">{{$adotado->id}}</a></td>
                 <td>{{$adotado->pet_id}} - {{$adotado->adotante->nome}}</td>
                 <td>{{\Carbon\Carbon::create($adotado->datahora)->format('d/m/Y H:i:s')}}</td>
-                <td>{!!$adotado->visitaum!!}</td>
-                <td>{!!$adotado->visitadois!!}</td>
-                <td>{!!$adotado->visitatres!!}</td>
+                <td>{!!$adotado->visita!!}</td>
+
             </tr>
                 
             @endforeach

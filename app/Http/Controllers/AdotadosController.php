@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Adotado;
 use Illuminate\Http\Request;
 use App\Models\Pet;
 use App\Models\Adotante;
+use Illuminate\Support\Facades\DB;
 use Session;
 
 class AdotadosController extends Controller
@@ -56,9 +58,7 @@ class AdotadosController extends Controller
         $adotado->pet_id = $request->input('pet_id');
         $adotado->adotante_id = $request->input('adotante_id');
         $adotado->datahora = \Carbon\Carbon::createFromFormat('d/m/Y H:i:s', $request->input('datahora'));
-        $adotado->data_visita_um = null;
-        $adotado->data_visita_dois = null;
-        $adotado->data_visita_tres = null;
+        $adotado->datavisita = null;
         $adotado->obs = $request->input('obs');
         if($adotado->save()){
             return redirect('adotados');
@@ -96,34 +96,18 @@ class AdotadosController extends Controller
      * @param  \App\Models\Adotado  $adotado
      * @return \Illuminate\Http\Response
      */
-    public function visitarum($id) {
-        $adotado = Adotado::find($id);
-        $adotado->data_visita_um = \Carbon\Carbon::now();
-        $adotado->save();
+    public function visitar($id) {
+        if (Auth::check() && Auth::user()->isAdmin()){
+            $adotado = Adotado::find($id);
+            $adotado->datavisita = \Carbon\Carbon::now();
+            $adotado->save();
 
-        if($adotado->save()){
-            Session::flash('mensagem', 'Efetuada visita');
-            return redirect()->back();
-        }
-    }
-    public function visitardois($id) {
-        $adotado = Adotado::find($id);
-        $adotado->data_visita_dois = \Carbon\Carbon::now();
-        $adotado->save();
-
-        if($adotado->save()){
-            Session::flash('mensagem', 'Efetuada visita');
-            return redirect()->back();
-        }
-    }
-    public function visitartres($id) {
-        $adotado = Adotado::find($id);
-        $adotado->data_visita_tres = \Carbon\Carbon::now();
-        $adotado->save();
-
-        if($adotado->save()){
-            Session::flash('mensagem', 'Efetuada visita');
-            return redirect()->back();
+            if($adotado->save()){
+                Session::flash('mensagem', 'Efetuada visita');
+                return redirect()->back();
+            }
+        } else {
+            return redirect('login');
         }
     }
 
@@ -140,9 +124,13 @@ class AdotadosController extends Controller
      */
     public function destroy($id)
     {
-        $adotado = Adotado::find($id);
-        $adotado->delete();
-        Session::flash('mensagem', 'Adoção excluida com sucesso');
-        return redirect(url('adotados/'));
+        if (Auth::check() && Auth::user()->isAdmin()){
+            $adotado = Adotado::find($id);
+            $adotado->delete();
+            Session::flash('mensagem', 'Adoção excluida com sucesso');
+            return redirect(url('adotados/'));
+        } else {
+            return redirect('login');
+        }
     }
 }

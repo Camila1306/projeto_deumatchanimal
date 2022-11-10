@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Adotante;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -172,9 +173,12 @@ class AdotantesController extends Controller
      * @param  \App\Models\Adotante  $adotante
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request ,$id)
     {
         $adotante = Adotante::find($id);
+        if (isset($request->foto)) {
+            unlink($request->foto);
+        }
         $adotante->delete();
         Session::flash('mensagem', 'Adotante excluído com sucesso');
         return redirect(url('adotantes/'));
