@@ -36,7 +36,7 @@
 {{Form::select('tamanho_pelo',array('Sem pelos'=> 'Sem pelos', 'Curto e liso'=>'Curto e liso', 'Curto e duro'=>'Curto e duro', 'Longo e liso'=>'Longo e liso', 'Longo  e ondulado/encaracolado'=>'Longo  e ondulado/encaracolado', 'Duplo'=> 'Duplo'), $pet->tamanho_pelo,['class'=>'form-control', 'required', 'placeholder'=>'Selecione o tamanho_pelo', 'list'=>'listtamanho_pelo' ])}}
 
 {{Form::label('cor_pelo', 'Cor do pelo')}}
-{{Form::text('cor_pelo',$pet->ocr_pelo,['class'=>'form-control', 'required', 'placeholder'=>'Exemplo: caramelo' ])}}
+{{Form::text('cor_pelo',$pet->cor_pelo,['class'=>'form-control', 'required', 'placeholder'=>'Exemplo: caramelo' ])}}
 {{Form::label('historia', 'História de vida')}}
 {{Form::text('historia',$pet->historia, ['class'=>'form-control', 'required', 'palceholder'=>'Informe a história do animal'])}}
 

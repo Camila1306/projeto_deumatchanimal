@@ -58,7 +58,6 @@ class AdotadosController extends Controller
         $adotado->pet_id = $request->input('pet_id');
         $adotado->adotante_id = $request->input('adotante_id');
         $adotado->datahora = \Carbon\Carbon::createFromFormat('d/m/Y H:i:s', $request->input('datahora'));
-        $adotado->datavisita = null;
         $adotado->obs = $request->input('obs');
         if($adotado->save()){
             return redirect('adotados');
@@ -96,20 +95,6 @@ class AdotadosController extends Controller
      * @param  \App\Models\Adotado  $adotado
      * @return \Illuminate\Http\Response
      */
-    public function visitar($id) {
-        if (Auth::check() && Auth::user()->isAdmin()){
-            $adotado = Adotado::find($id);
-            $adotado->datavisita = \Carbon\Carbon::now();
-            $adotado->save();
-
-            if($adotado->save()){
-                Session::flash('mensagem', 'Efetuada visita');
-                return redirect()->back();
-            }
-        } else {
-            return redirect('login');
-        }
-    }
 
     public function update(Request $request, Adotado $adotado)
     {

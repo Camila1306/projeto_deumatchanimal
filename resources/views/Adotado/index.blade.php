@@ -37,7 +37,6 @@
                 <th>Adotante</th>
                 <th>Data</th>
                 <th>Obs</th>
-                <th>Data visita</th>
             </tr>
             @foreach ($adotados as $adotado)
             <tr class="text-center">
@@ -55,9 +54,6 @@
                 </td>
                 <td>
                     {{$adotado->obs}}
-                </td>
-                <td>
-                    {{!!$adotado->datavisita!!}}
                 </td>
             </tr>
             @endforeach

@@ -26,8 +26,6 @@
             <strong>Adotante:</strong> {{$adotado->adotante_id}} - {{$adotado->adotante->nome}}<br>
             <strong>Data:</strong> {{\Carbon\Carbon::create($adotado->datahora)->format('d/mY H:i:s')}}<br>
             <strong>Obs:</strong> {{$adotado->obs}}<br>
-            <strong>Data visita:</strong> {{!!$adotado->datavisita!!}}<br>
-
         </p>
     </div>
     <div class="card-footer">
