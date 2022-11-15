@@ -49,7 +49,7 @@
 {{Form::label('planejamento', 'Planejamento para seu novo amigo')}}
 {{Form::text('planejamento','',['class'=>'form-control', 'required', 'placeholder'=>'Exemplo: Aos sábados iremos passear no parque.' ])}}
 
-{{Form::label('foto', 'Foto da residencia')}}
+{{Form::label('foto', 'Foto')}}
 {{Form::file('foto', ['class' => 'form-control', 'id'=>'foto'])}}
 <br>
 {{Form::submit('Salvar',['class'=>'btn btn-outline-success'])}}

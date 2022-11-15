@@ -20,7 +20,7 @@ class AdotadosController extends Controller
     public function index()
     {
         $adotados = Adotado::paginate(5);
-        return view('Adotado.index', array('adotados'=>$adotados, 'busca'=>null));
+        return view('Adotado.index', array('adotados' => $adotados, 'busca' => null));
     }
 
     /**
@@ -28,17 +28,18 @@ class AdotadosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function buscar(Request $request){
-        
-        $adotados = Adotado::join('pets', 'pets.id', '=', 'adotados.pet_id')->join('adotantes', 'adotantes.id', '=', 'adotados.adotante_id')->select('adotados.*', 'pets.nome', 'adotantes.nome')->where('pet_id', '=', $request->input('busca'))->orwhere('adotante_id', '=', $request->input('busca'))->orwhere('obs','LIKE', '%'.$request->input('busca').'%')->orwhere('pet.nome', 'LIKE', '%'.$request->input('busca'))->orwhere('adotante.nome', 'LIKE', '%'.$request->input('busca'))->simplepaginate(5);
-        return view('Adotado.index', array('adotados'=>$adotados, 'busca'=>$request->input('busca')));
+    public function buscar(Request $request)
+    {
+
+        $adotados = Adotado::join('pets', 'pets.id', '=', 'adotados.pet_id')->join('adotantes', 'adotantes.id', '=', 'adotados.adotante_id')->select('adotados.*', 'pets.nome', 'adotantes.nome')->where('pet_id', '=', $request->input('busca'))->orwhere('adotante_id', '=', $request->input('busca'))->orwhere('obs', 'LIKE', '%' . $request->input('busca') . '%')->orwhere('pet.nome', 'LIKE', '%' . $request->input('busca'))->orwhere('adotante.nome', 'LIKE', '%' . $request->input('busca'))->paginate(5);
+        return view('Adotado.index', array('adotados' => $adotados, 'busca' => $request->input('busca')));
     }
 
     public function create()
     {
         $pets = Pet::all();
         $adotantes = Adotante::all();
-        return view('Adotado.create', ['pets'=>$pets, 'adotantes'=>$adotantes]);
+        return view('Adotado.create', ['pets' => $pets, 'adotantes' => $adotantes]);
     }
 
     /**
@@ -51,7 +52,7 @@ class AdotadosController extends Controller
     {
         $this->validate($request, [
             'pet_id' => 'required',
-            'adotante_id'=> 'required',
+            'adotante_id' => 'required',
             'datahora' => 'required',
         ]);
         $adotado = new Adotado();
@@ -59,9 +60,8 @@ class AdotadosController extends Controller
         $adotado->adotante_id = $request->input('adotante_id');
         $adotado->datahora = \Carbon\Carbon::createFromFormat('d/m/Y H:i:s', $request->input('datahora'));
         $adotado->obs = $request->input('obs');
-        if($adotado->save()){
+        if ($adotado->save()) {
             return redirect('adotados');
-            
         }
     }
 
@@ -74,7 +74,7 @@ class AdotadosController extends Controller
     public function show($id)
     {
         $adotado = Adotado::find($id);
-        return view('Adotado.show', array('adotado'=>$adotado));
+        return view('Adotado.show', array('adotado' => $adotado));
     }
 
     /**
@@ -109,8 +109,9 @@ class AdotadosController extends Controller
      */
     public function destroy($id)
     {
-        if (Auth::check() && Auth::user()->isAdmin()){
+        if (Auth::check() && Auth::user()->isAdmin()) {
             $adotado = Adotado::find($id);
+
             $adotado->delete();
             Session::flash('mensagem', 'Adoção excluida com sucesso');
             return redirect(url('adotados/'));

@@ -18,7 +18,7 @@ class PetsController extends Controller
     public function index()
     {
         $pets = Pet::paginate(5);
-        return view('pet.index', array('pets'=>$pets, 'busca'=>null));
+        return view('pet.index', array('pets' => $pets, 'busca' => null));
     }
 
     /**
@@ -29,9 +29,9 @@ class PetsController extends Controller
 
     public function buscar(Request $request)
     {
-        $pets = Pet::where('nome', 'LIKE', '%'.$request->input('busca').'%')->orwhere('especie', 'LIKE', '%'.$request->input('busca').'%')->orwhere('porte', 'LIKE', '%'.$request->input('busca').'%')->orwhere('adaptacao', 'LIKE', '%'.$request->input('busca').'%')->orwhere('temperamento', 'LIKE', '%'.$request->input('busca').'%')->orwhere('idade', 'LIKE', '%'.$request->input('busca').'%')->orwhere('sexo', 'LIKE', '%'.$request->input('busca').'%')->orwhere('tamanho_pelo', 'LIKE', '%'.$request->input('busca').'%')->orwhere('cor_pelo', 'LIKE', '%'.$request->input('busca').'%')->get();
-        return view('pet.index', array('pets'=>$pets, 'busca'=>$request->input('busca')));
-    }  
+        $pets = Pet::where('nome', 'LIKE', '%' . $request->input('busca') . '%')->orwhere('especie', 'LIKE', '%' . $request->input('busca') . '%')->orwhere('porte', 'LIKE', '%' . $request->input('busca') . '%')->orwhere('adaptacao', 'LIKE', '%' . $request->input('busca') . '%')->orwhere('temperamento', 'LIKE', '%' . $request->input('busca') . '%')->orwhere('idade', 'LIKE', '%' . $request->input('busca') . '%')->orwhere('sexo', 'LIKE', '%' . $request->input('busca') . '%')->orwhere('tamanho_pelo', 'LIKE', '%' . $request->input('busca') . '%')->orwhere('cor_pelo', 'LIKE', '%' . $request->input('busca') . '%')->paginate(5);
+        return view('pet.index', array('pets' => $pets, 'busca' => $request->input('busca')));
+    }
 
     public function create()
     {
@@ -40,7 +40,6 @@ class PetsController extends Controller
         } else {
             return redirect('login');
         }
-
     }
 
     /**
@@ -51,7 +50,7 @@ class PetsController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::check() && Auth::user()->isAdmin()){
+        if (Auth::check() && Auth::user()->isAdmin()) {
 
             $this->validate($request, [
                 'nome' => 'required',
@@ -64,7 +63,7 @@ class PetsController extends Controller
                 'tamanho_pelo' => 'required',
                 'cor_pelo' => 'required',
                 'historia' => 'required',
-    
+
             ]);
             $pet = new Pet();
             $pet->nome = $request->input('nome');
@@ -77,12 +76,12 @@ class PetsController extends Controller
             $pet->tamanho_pelo = $request->input('tamanho_pelo');
             $pet->cor_pelo = $request->input('cor_pelo');
             $pet->historia = $request->input('historia');
-            if($pet->save()){
-                if($request->hasFile('foto')){
+            if ($pet->save()) {
+                if ($request->hasFile('foto')) {
                     $imagem = $request->file('foto');
-                    $nomearquivo = md5($pet->id).".".$imagem->getClientOriginalExtension();
+                    $nomearquivo = md5($pet->id) . "." . $imagem->getClientOriginalExtension();
                     $request->file('foto')->move(public_path('./img/pets'), $nomearquivo);
-                } 
+                }
                 Session::flash('mensagem', 'Cadastro de pet salvo com sucesso');
                 return redirect('pets');
             }
@@ -100,7 +99,7 @@ class PetsController extends Controller
     public function show($id)
     {
         $pet = Pet::find($id);
-        return view('pet.show', array('pet'=>$pet));
+        return view('pet.show', array('pet' => $pet));
     }
 
     /**
@@ -111,9 +110,9 @@ class PetsController extends Controller
      */
     public function edit($id)
     {
-        if (Auth::check() && Auth::user()->isAdmin()){
+        if (Auth::check() && Auth::user()->isAdmin()) {
             $pet = Pet::find($id);
-            return view('pet.edit', array('pet'=>$pet));
+            return view('pet.edit', array('pet' => $pet));
         } else {
             return redirect('login');
         }
@@ -128,7 +127,7 @@ class PetsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Auth::check() && Auth::user()->isAdmin()){
+        if (Auth::check() && Auth::user()->isAdmin()) {
 
             $this->validate($request, [
                 'nome' => 'required',
@@ -141,12 +140,12 @@ class PetsController extends Controller
                 'tamanho_pelo' => 'required',
                 'cor_pelo' => 'required',
                 'historia' => 'required',
-    
+
             ]);
             $pet = Pet::find($id);
-            if($request->hasFile('foto')){
+            if ($request->hasFile('foto')) {
                 $imagem = $request->file('foto');
-                $nomearquivo = md5($pet->id).".".$imagem->getClientOriginalExtension();
+                $nomearquivo = md5($pet->id) . "." . $imagem->getClientOriginalExtension();
                 $request->file('foto')->move(public_path('./img/pets'), $nomearquivo);
             }
             $pet->nome = $request->input('nome');
@@ -159,7 +158,7 @@ class PetsController extends Controller
             $pet->tamanho_pelo = $request->input('tamanho_pelo');
             $pet->cor_pelo = $request->input('cor_pelo');
             $pet->historia = $request->input('historia');
-            if($pet->save()){
+            if ($pet->save()) {
                 Session::flash('mensagem', 'Cadastro do pet alterado com sucesso');
                 return redirect()->back();
             }
@@ -176,7 +175,7 @@ class PetsController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        if (Auth::check() && Auth::user()->isAdmin()){
+        if (Auth::check() && Auth::user()->isAdmin()) {
             $pet = Pet::find($id);
             if (isset($request->foto)) {
                 unlink($request->foto);

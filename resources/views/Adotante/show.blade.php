@@ -4,22 +4,22 @@
 <div class="card w-50">
     <div class="card-img">
         @php
-            $nomeimagem = "";
-            if(file_exists("./img/adotantes/".md5($adotante->id).".jpg")){
-                $nomeimagem = "./img/adotantes/".md5($adotante->id).".jpg";
-            } elseif(file_exists("./img/adotantes/".md5($adotante->id).".png")){
-                $nomeimagem = "./img/adotantes/".md5($adotante->id).".png";
-            } elseif(file_exists("./img/adotantes/".md5($adotante->id).".gif")){
-                $nomeimagem = "./img/adotantes/".md5($adotante->id).".gif";
-            } elseif(file_exists("./img/adotantes/".md5($adotante->id).".webp")){
-                $nomeimagem = "./img/adotantes/".md5($adotante->id).".webp";
-            } elseif(file_exists("./img/adotantes/".md5($adotante->id).".jpeg")){
-                $nomeimagem = "./img/adotantes/".md5($adotante->id).".jpeg";
-            } elseif(file_exists("./img/adotantes/".md5($adotante->id).".jfif")){
-                $nomeimagem = "./img/adotantes/".md5($adotante->id).".jfif";
-            } else {
-                $nomeimagem = "./img/adotantes/semfoto.jfif";
-            }
+        $nomeimagem = "";
+        if(file_exists("./img/adotantes/".md5($adotante->id).".jpg")){
+        $nomeimagem = "./img/adotantes/".md5($adotante->id).".jpg";
+        } elseif(file_exists("./img/adotantes/".md5($adotante->id).".png")){
+        $nomeimagem = "./img/adotantes/".md5($adotante->id).".png";
+        } elseif(file_exists("./img/adotantes/".md5($adotante->id).".gif")){
+        $nomeimagem = "./img/adotantes/".md5($adotante->id).".gif";
+        } elseif(file_exists("./img/adotantes/".md5($adotante->id).".webp")){
+        $nomeimagem = "./img/adotantes/".md5($adotante->id).".webp";
+        } elseif(file_exists("./img/adotantes/".md5($adotante->id).".jpeg")){
+        $nomeimagem = "./img/adotantes/".md5($adotante->id).".jpeg";
+        } elseif(file_exists("./img/adotantes/".md5($adotante->id).".jfif")){
+        $nomeimagem = "./img/adotantes/".md5($adotante->id).".jfif";
+        } else {
+        $nomeimagem = "./img/adotantes/semfoto.jpg";
+        }
         @endphp
         {{Html::image(asset($nomeimagem), 'Foto de '.$adotante->nome,["class"=>"card-img-top-thumbnail w-100"])}}
     </div>
@@ -48,14 +48,14 @@
         </p>
     </div>
     <div class="card-footer">
-            {{Form::open(['route' => ['adotantes.destroy', $adotante->id],'method' => 'DELETE'])}}
-            @if ($nomeimagem !== "./img/adotantes/semfoto.png")
-                {{Form::hidden('foto', $nomeimagem)}}
-            @endif
-                <a href="{{url('adotantes/'.$adotante->id.'/edit')}}" class="btn btn-outline-info">Alterar</a>
-                {{Form::submit('Excluir', ['class' => 'btn btn-outline-danger'])}}
+        {{Form::open(['route' => ['adotantes.destroy', $adotante->id],'method' => 'DELETE'])}}
+        @if ($nomeimagem !== "./img/adotantes/semfoto.png")
+        {{Form::hidden('foto', $nomeimagem)}}
+        @endif
+        <a href="{{url('adotantes/'.$adotante->id.'/edit')}}" class="btn btn-outline-info">Alterar</a>
+        {{Form::submit('Excluir', ['class' => 'btn btn-outline-danger'])}}
         <a href="{{url('adotantes/')}}" class="btn btn-outline-secondary">Voltar</a>
-            {{Form::close()}}
+        {{Form::close()}}
     </div>
 </div>
 <br>
@@ -77,7 +77,7 @@
                 <td>{{$adotado->pet_id}} - {{$adotado->pet->nome}}</td>
                 <td>{{\Carbon\Carbon::create($adotado->datahora)->format('d/m/Y H:i:s')}}</td>
             </tr>
-                
+
             @endforeach
         </table>
     </div>

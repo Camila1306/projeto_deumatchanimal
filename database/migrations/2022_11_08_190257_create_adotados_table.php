@@ -21,8 +21,6 @@ return new class extends Migration
             $table->foreign('adotante_id')->references('id')->on('adotantes');
             $table->dateTime('datahora');
             $table->text('obs');
-            $table->dateTime('datavisita');
-
             $table->timestamps();
         });
     }

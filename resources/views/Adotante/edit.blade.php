@@ -29,6 +29,8 @@
 {{Form::text('bairro',$adotante->bairro,['class'=>'form-control', 'required', 'placeholder'=>'Bairro'])}}
 {{Form::label('CEP', 'CEP')}}
 {{Form::text('CEP',$adotante->CEP,['class'=>'form-control', 'required', 'placeholder'=>'CEP'])}}
+{{Form::label('cidade', 'Cidade')}}
+{{Form::text('cidade',$adotante->cidade,['class'=>'form-control', 'required', 'placeholder'=>'cidade'])}}
 {{Form::label('estado', 'Estado')}}
 {{Form::text('estado',$adotante->estado,['class'=>'form-control', 'required', 'placeholder'=>'Estado'])}}
 

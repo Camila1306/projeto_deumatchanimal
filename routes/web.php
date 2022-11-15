@@ -27,7 +27,6 @@ Route::get('adotantes/buscar', [AdotantesController::class, 'buscar']);
 Route::resource('adotantes', AdotantesController::class);
 
 Route::get('adotados/buscar', [AdotadosController::class, 'buscar']);
-Route::put('adotados/{adotado}/visitar',[AdotadosController::class,'visitar'])->name('adotados.visitar');
 Route::resource('adotados', AdotadosController::class);
 
 
